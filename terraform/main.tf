@@ -13,6 +13,13 @@ provider "aws" {
   region  = "us-east-1"
 }
 
+#  Variables
+variable "subnet_prefix" {
+  description = "cidr block for subnet"
+  default = "10.0.1.0/24"
+  type = string
+}
+
 # VPC
 resource "aws_vpc" "myVpc" {
   cidr_block       = "10.0.0.0/16"
@@ -46,7 +53,7 @@ resource "aws_route_table" "route-table" {
 #  Subnet
 resource "aws_subnet" "subnet_1" {
   vpc_id     = aws_vpc.myVpc.id
-  cidr_block = "10.0.1.0/24"
+  cidr_block = var.subnet_prefix
   availability_zone = "us-east-1a"
 
   tags = {
